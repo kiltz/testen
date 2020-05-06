@@ -3,6 +3,7 @@ package de.kiltz.sso.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -20,7 +21,7 @@ import de.kiltz.sso.model.Konto;
  * @author tz
  */
 @SpringBootTest
-public class KontoServiceTest {
+public class KontoServiceNeuTest {
 
     private KontoService service;
 
@@ -46,6 +47,24 @@ public class KontoServiceTest {
         } catch (SSOValidationException e) {
             fail(e);
         }
+
+    }
+    @Test
+    void testNeuFehlendePflichtangaben() {
+        Konto k = new Konto();
+        try {
+            Konto kNeu = service.neu(k);
+            fail("Sollte eine Ex werfen!");
+        } catch (SSOValidationException e) {
+            // alles gut
+        }
+
+    }
+    @Test
+    void testNeuFehlendePflichtangabenAlternative() {
+        Konto k = new Konto();
+        assertThrows(SSOValidationException.class, () -> service.neu(k));
+
 
     }
 }

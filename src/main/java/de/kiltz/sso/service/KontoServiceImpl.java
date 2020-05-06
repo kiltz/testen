@@ -32,7 +32,7 @@ public class KontoServiceImpl implements KontoService{
 
     private void validiere(Konto k)  throws SSOValidationException  {
         StringBuilder fehler = new StringBuilder();
-        if (k.getEmail().isEmpty()){
+        if (k.getEmail() == null || k.getEmail().isEmpty()){
             fehler.append("Email ist ein Pflichtfeld");
         }
         // ...
