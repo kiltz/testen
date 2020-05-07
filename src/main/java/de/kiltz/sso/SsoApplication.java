@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+
 public class SsoApplication {
 	private static final Logger LOG = Logger.getLogger(SsoApplication.class.getName());
 	public static void main(String[] args) throws IOException {

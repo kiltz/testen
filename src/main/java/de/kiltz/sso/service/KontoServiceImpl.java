@@ -26,6 +26,9 @@ public class KontoServiceImpl implements KontoService{
     @Override
     public Konto neu(Konto k) throws SSOValidationException {
         validiere(k);
+        if (dao.findByEmail(k.getEmail()) != null) {
+            throw new SSOValidationException("Die E-Mail-Adresse ist schon vergeben!");
+        }
         KontoEntity e = dao.save(KontoConverter.kontoEntity(k));
         return KontoConverter.toModel(e);
     }
@@ -56,6 +59,12 @@ public class KontoServiceImpl implements KontoService{
     @Override
     public Konto holePerEmail(String email) {
         KontoEntity e = dao.findByEmail(email);
+        return e == null ? null : KontoConverter.toModel(e);
+    }
+
+    @Override
+    public Konto login(String email, String passwort) {
+        KontoEntity e = dao.findByEmailAndAndPasswort(email, passwort);
         return e == null ? null : KontoConverter.toModel(e);
     }
 

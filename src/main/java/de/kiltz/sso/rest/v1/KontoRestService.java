@@ -1,13 +1,12 @@
 package de.kiltz.sso.rest.v1;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.kiltz.sso.model.Konto;
-import de.kiltz.sso.rest.RestService;
 import de.kiltz.sso.service.KontoService;
 import de.kiltz.sso.service.SSOValidationException;
 
@@ -15,8 +14,8 @@ import de.kiltz.sso.service.SSOValidationException;
  * @author tz
  */
 
-@Path("/sso/konto")
-@RestService
+@RestController
+@RequestMapping(path="rs/konto")
 public class KontoRestService {
 
     private final KontoService service;
@@ -26,15 +25,14 @@ public class KontoRestService {
         this.service = service;
     }
 
-    @GET
-    public String get(@QueryParam("email") String email) {
+    @RequestMapping(method = RequestMethod.GET)
+    public String get(@RequestParam("email") String email) {
         Konto k = service.holePerEmail(email);
 
         return k == null ? "Nicht gefunden" : k.toString();
     }
 
-    @Path("test")
-    @GET
+    @RequestMapping(method = RequestMethod.GET, path="test")
     public void teste() throws SSOValidationException {
         Konto k = new Konto();
         k.setVorname("Friedrich");

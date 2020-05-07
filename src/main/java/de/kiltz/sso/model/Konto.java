@@ -2,6 +2,8 @@ package de.kiltz.sso.model;
 
 import java.util.StringJoiner;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * @author tz
  */
@@ -10,7 +12,9 @@ public class Konto {
     private Long id;
     private String vorname;
     private String nachname;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String passwort;
 
     public Long getId() {
