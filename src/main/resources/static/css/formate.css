@@ -1,0 +1,212 @@
+
+
+/* Layout */
+#layoutMenue  {
+	float:left; 
+	width:200px; 
+	height:90%;
+	margin: 10px;
+	
+	border-color : #D9E5EF;
+	border-style : solid;
+	border-left-width : 0;
+	border-right-width : 1px;
+	border-bottom-width : 1px;
+	border-top-width : 0;
+}
+#layoutOben  {
+	height: 50px;
+	margin-top: 1cm;
+	margin-left: 1cm;
+	
+	font-size : 16pt;
+	color : #005091;
+	vertical-align : middle;
+	
+	border-color : #D9E5EF;
+	border-style : solid;
+	border-left-width : 1px;
+	border-right-width : 1px;
+	border-bottom-width : 1px;
+	border-top-width : 0;
+}
+#layoutInhalt  {
+	
+	margin-left : 250px;
+	margin-top : 20px;
+	margin-right : 10px;
+	margin-bottom : 10px;
+
+	border-color : #D9E5EF;
+	border-style : solid;
+	border-left-width : 0;
+	border-right-width : 1px;
+	border-bottom-width : 1px;
+	border-top-width : 0;
+	
+	height : 90%;
+}
+
+#layoutRechts {
+	float:right; 
+	width:12em; 
+	height:90%;
+	
+	margin-top: 50px;
+	
+	border-color : #D9E5EF;
+	border-style : solid;
+	border-left-width : 1px;
+	border-right-width : 0;
+	border-bottom-width : 1px;
+	border-top-width : 0;
+}
+
+.logo {
+	 style : "float:left"
+}
+/* Layout - Ende*/
+
+
+/* Tags */
+body  {
+	font-size : 10pt;
+	font-family : Verdana,Arial,Helvetica,Sans-serif;
+	color : #000000;
+	background-color : #ffffff;
+	background-repeat : no-repeat;
+	background-attachment : fixed;
+}
+
+
+li  {
+	font-size : 10pt;
+	font-weight : normal;
+	font-family : Verdana,Arial,Helvetica,Sans-serif;
+	text-align : left;
+}
+
+h1  {
+	font-size : 14pt;
+	font-weight : normal;
+	font-family : verdana,arial,Helvetica,sans-serif;
+	text-align : left;
+}
+
+h2  {
+	font-size : 12pt;
+	font-weight : bold;
+	font-family : Verdana,Arial,Helvetica,Sans-serif;
+}
+
+h3  {
+	font-size : 10pt;
+	font-weight : bold;
+	font-family : Verdana,Arial,Helvetica,Sans-serif;
+}
+
+/* Tags - Tabelle */
+td  {
+	font-size : 10pt;
+	vertical-align : middle;
+	padding-top: 1px;
+	padding-right: 3px;
+	padding-bottom: 1px;
+	padding-left: 3px;
+
+	border-color : #D9E5EF;
+	border-style : solid;
+	border-left-width : 0;
+	border-right-width : 1px;
+	border-bottom-width : 1px;
+	border-top-width : 0;
+}
+
+
+/* Links */
+a:link  {
+	font-family : verdana,arial,Helvetica,sans-serif;
+	font-size : 10pt;
+	text-decoration : none;
+	font-weight : bold;
+	color : #005091;
+}
+
+a:visited  {
+	font-family : verdana,arial,Helvetica,sans-serif;
+	font-size : 10pt;
+	text-decoration : none;
+	font-weight : bold;
+	color : #005091;
+}
+
+a:active  {
+	font-family : verdana,arial,Helvetica,sans-serif;
+	font-size : 10pt;
+	text-decoration : none;
+	font-weight : bold;
+	color : #E23130;
+}
+
+A.Ohne  {
+	text-decoration : none;
+}
+
+/* Form-Elements */
+input  {
+	font-size : 12px;
+	font-family : Verdana;
+	border-width : 1px;
+	border-color : black;
+}
+
+textarea  {
+	font-size : 12px;
+	font-family : Verdana;
+	border-width : 1px;
+	border-color : black;
+}
+
+select  {
+	font-size : 12px;
+	font-family : Verdana;
+	border-width : 1px;
+	border-color : black;
+}
+.Txt100  {
+    text-align : left;
+    width: 100px;
+}
+.Txt150  {
+    text-align : left;
+    width: 150px;
+}
+
+/* Farben */
+.rot  {
+	color : #E23130;
+}
+
+.dunkelblau  {
+	color : #005091;
+}
+
+.blau  {
+	color : #D9E5EF;
+}
+
+.hellblau  {
+	color : #F2F6F9;
+}
+
+.grau  {
+	color : #CFD1D4;
+}
+
+.gruen  {
+	color : #006753;
+}
+
+.gelb  {
+	color : #F9F400;
+}
