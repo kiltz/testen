@@ -1,5 +1,7 @@
 package de.kiltz.sso.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,21 +12,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import de.kiltz.sso.model.Konto;
 import de.kiltz.sso.service.KontoService;
 import de.kiltz.sso.service.SSOValidationException;
+import de.kiltz.sso.service.SsoService;
 
 @Controller
 @RequestMapping(value = "/konto")
 public class KontoController {
 
 	private final KontoService service;
+	private final SsoService ssoService;
 
 	@Autowired
-	public KontoController(KontoService service) {
+	public KontoController(KontoService service, SsoService ssoService) {
 		this.service = service;
+		this.ssoService = ssoService;
 	}
 
 	@RequestMapping(value = "/logout.html", method = RequestMethod.GET)
-	public String logout(Model model) {
-		return "welcome";
+	public String logout(HttpSession session) {
+		session.setAttribute("konto", null);
+		session.setAttribute("token", null);
+		return "redirect";
 	}
 	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
 	public String loginForm(Model model) {
@@ -40,14 +47,16 @@ public class KontoController {
 	@RequestMapping(value = "/login.html", method = RequestMethod.POST)
 	public String login(
 			@ModelAttribute("konto") Konto konto,
-			Model model) {
+			Model model, HttpSession session) {
 		Konto k = service.login(konto.getEmail(), konto.getPasswort());
 		if (k == null) {
 			model.addAttribute("errMsg", "Login nicht erfolgreich");
 			return null;
 		}
-		model.addAttribute("konto", k);
-		return "welcome";
+		String token = ssoService.createToken(k.getEmail());
+		session.setAttribute("konto", k);
+		session.setAttribute("token", token);
+		return "redirect";
 	}
 	@RequestMapping(value = "/register.html", method = RequestMethod.POST)
 	public String register(

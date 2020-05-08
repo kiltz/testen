@@ -4,7 +4,7 @@
 #layoutMenue  {
 	float:left; 
 	width:200px; 
-	height:90%;
+	height:85%;
 	margin: 10px;
 	
 	border-color : #D9E5EF;
@@ -37,14 +37,6 @@
 	margin-right : 10px;
 	margin-bottom : 10px;
 
-	border-color : #D9E5EF;
-	border-style : solid;
-	border-left-width : 0;
-	border-right-width : 1px;
-	border-bottom-width : 1px;
-	border-top-width : 0;
-	
-	height : 90%;
 }
 
 #layoutRechts {

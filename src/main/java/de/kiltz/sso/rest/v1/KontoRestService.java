@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import de.kiltz.sso.model.Konto;
 import de.kiltz.sso.service.KontoService;
 import de.kiltz.sso.service.SSOValidationException;
+import de.kiltz.sso.service.SsoService;
 
 /**
  * @author tz
@@ -19,14 +20,20 @@ import de.kiltz.sso.service.SSOValidationException;
 public class KontoRestService {
 
     private final KontoService service;
+    private final SsoService ssoService;
 
     @Autowired
-    public KontoRestService(KontoService service) {
+    public KontoRestService(KontoService service, SsoService ssoService) {
         this.service = service;
+        this.ssoService = ssoService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String get(@RequestParam("email") String email) {
+    public String get(@RequestParam("email") String email, @RequestParam("token") String token ) throws SSOValidationException {
+        if (!ssoService.validate(email, token)) {
+            return "Du bist für diese Funktion nicht berechtigt!";
+        }
+
         Konto k = service.holePerEmail(email);
 
         return k == null ? "Nicht gefunden" : k.toString();
