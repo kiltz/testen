@@ -1,4 +1,0 @@
-2020-05-04 12:06:01 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Tabelle "KONTO" nicht gefunden
-Table "KONTO" not found; SQL statement:
-select * from konto [42102-196]

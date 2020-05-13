@@ -1,8 +1,10 @@
 package de.kiltz.sso.rest.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +30,7 @@ public class KontoRestService {
         this.ssoService = ssoService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String get(@RequestParam("email") String email, @RequestParam("token") String token ) throws SSOValidationException {
         if (!ssoService.validate(email, token)) {
             return "Du bist für diese Funktion nicht berechtigt!";
@@ -39,16 +41,11 @@ public class KontoRestService {
         return k == null ? "Nicht gefunden" : k.toString();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path="test")
-    public void teste() throws SSOValidationException {
-        Konto k = new Konto();
-        k.setVorname("Friedrich");
-        k.setNachname("Kiltz");
-        k.setEmail("f@kiltz.de");
-        k.setPasswort("keins");
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void neu(Konto k) throws SSOValidationException {
+        System.out.println(k);
         k = service.neu(k);
 
-        System.out.println(k);
 
     }
 
