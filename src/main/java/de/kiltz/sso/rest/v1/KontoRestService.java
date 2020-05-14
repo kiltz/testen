@@ -1,9 +1,13 @@
 package de.kiltz.sso.rest.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,23 +34,22 @@ public class KontoRestService {
         this.ssoService = ssoService;
     }
 
-    @GetMapping
-    public String get(@RequestParam("email") String email, @RequestParam("token") String token ) throws SSOValidationException {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Konto> get(@RequestParam("email") String email, @RequestParam("token") String token ) throws SSOValidationException {
         if (!ssoService.validate(email, token)) {
-            return "Du bist für diese Funktion nicht berechtigt!";
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
-
-        Konto k = service.holePerEmail(email);
-
-        return k == null ? "Nicht gefunden" : k.toString();
+        return new ResponseEntity(service.holePerEmail(email), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void neu(Konto k) throws SSOValidationException {
-        System.out.println(k);
+    public ResponseEntity neu(@RequestBody Konto k) throws SSOValidationException {
         k = service.neu(k);
-
-
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @ExceptionHandler(SSOValidationException.class)
+    public ResponseEntity<String> exceptionHandler(Exception ex) {
+        return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
