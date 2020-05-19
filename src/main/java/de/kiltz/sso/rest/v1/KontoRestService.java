@@ -35,21 +35,21 @@ public class KontoRestService {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Konto> get(@RequestParam("email") String email, @RequestParam("token") String token ) throws SSOValidationException {
+    public ResponseEntity<Konto> get(@RequestParam("email") String email, @RequestParam("token") String token ) {
         if (!ssoService.validate(email, token)) {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity(service.holePerEmail(email), HttpStatus.OK);
+        return new ResponseEntity<>(service.holePerEmail(email), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity neu(@RequestBody Konto k) throws SSOValidationException {
-        k = service.neu(k);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<Long> neu(@RequestBody Konto k) throws SSOValidationException {
+        Konto kNeu = service.neu(k);
+        return new ResponseEntity<>(kNeu.getId(), HttpStatus.CREATED);
     }
 
     @ExceptionHandler(SSOValidationException.class)
     public ResponseEntity<String> exceptionHandler(Exception ex) {
-        return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

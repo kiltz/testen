@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.kiltz.sso.service.KontoService;
@@ -31,14 +32,14 @@ public class LoginRestService {
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> login(@RequestParam("email") String email, @RequestParam("passwort") String passwort){
         if (service.login(email, passwort) != null) {
-            return new ResponseEntity(ssoService.createToken(email), HttpStatus.OK);
+            return new ResponseEntity<>(ssoService.createToken(email), HttpStatus.OK);
         }
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity logout(String email, String token) {
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void logout(String email, String token) {
         ssoService.delete(email, token);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
