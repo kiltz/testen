@@ -13,7 +13,7 @@ import de.kiltz.sso.data.KontoEntity;
 @Repository
 public interface KontoDao extends JpaRepository<KontoEntity, Long> {
 
-    KontoEntity findByEmailAndAndPasswort(String email, String passwort);
+    KontoEntity findByEmailAndPasswort(String email, String passwort);
     KontoEntity findByEmail(String email);
 
     List<KontoEntity> findByNachnameContains(String suchbegriff);

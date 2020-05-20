@@ -64,7 +64,7 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public Konto login(String email, String passwort) {
-        KontoEntity e = dao.findByEmailAndAndPasswort(email, passwort);
+        KontoEntity e = dao.findByEmailAndPasswort(email, passwort);
         return e == null ? null : KontoConverter.toModel(e);
     }
 

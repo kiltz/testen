@@ -28,6 +28,6 @@ class KontoCRUDTest {
         assertNull(e.getId());
 
         KontoEntity e2 = dao.save(e);
-        assertNotNull(e.getId());
+        assertNotNull(e2.getId());
     }
 }
