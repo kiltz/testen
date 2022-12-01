@@ -1,0 +1,19 @@
+Aufgabe TDD
+
+Beim Speichern eines Kontos (neu oder ändern) soll das Passwort überprüft werden.
+Die Überprüfung soll schrittweise per TDD realisiert werden.
+
+Die Regeln sind:
+	• Das Passwort muss mind. 6 Zeichen enthalten
+	• Groß- und Kleinbuchstaben enthalten
+	• Mindestens eine Zahl enthalten
+	• (opt.) muss ein Sonderzeichen aus (!"§$%&/()=?@#+-) enthalten
+
+Tipp: Legt eine Klasse "TextUtils" an und in dieser eine Methode
+    public static boolean pruefePasswort(String pw) {
+        //…
+    }
+
+Schaut euch vorher die Coding Kata TDD - Test Driven Development in Java using JUnit5 / AssertJ - Building a Stack [Coding Kata] unter
+https://www.youtube.com/watch?v=OQJxp8tTcl0
+an. (die ersten 15 Minuten reichen)
