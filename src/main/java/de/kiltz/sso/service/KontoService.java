@@ -13,7 +13,7 @@ public interface KontoService {
     void loesche(Konto k);
     Konto aktualisiere(Konto k) throws SSOValidationException;
     Konto holePerEmail(String email);
-    Konto login(String email, String passwort);
+    Konto login(String email, String passwort) throws SSOValidationException;
 
     List<Konto> suche(String suchbegriff);
 }

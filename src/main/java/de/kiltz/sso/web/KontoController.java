@@ -18,6 +18,7 @@ import de.kiltz.sso.service.SsoService;
 @RequestMapping(value = "/konto")
 public class KontoController {
 
+	public static final String KONTO = "konto";
 	private final KontoService service;
 	private final SsoService ssoService;
 
@@ -29,38 +30,38 @@ public class KontoController {
 
 	@RequestMapping(value = "/logout.html", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		session.setAttribute("konto", null);
+		session.setAttribute(KONTO, null);
 		session.setAttribute("token", null);
 		return "redirect";
 	}
 	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
 	public String loginForm(Model model) {
-		model.addAttribute("konto", new Konto());
+		model.addAttribute(KONTO, new Konto());
 		return "konto/login";
 	}
 	@RequestMapping(value = "/register.html", method = RequestMethod.GET)
 	public String registerForm(Model model) {
-		model.addAttribute("konto", new Konto());
+		model.addAttribute(KONTO, new Konto());
 		return "konto/register";
 	}
 
 	@RequestMapping(value = "/login.html", method = RequestMethod.POST)
 	public String login(
-			@ModelAttribute("konto") Konto konto,
-			Model model, HttpSession session) {
+			@ModelAttribute(KONTO) Konto konto,
+			Model model, HttpSession session) throws SSOValidationException {
 		Konto k = service.login(konto.getEmail(), konto.getPasswort());
 		if (k == null) {
 			model.addAttribute("errMsg", "Login nicht erfolgreich");
 			return null;
 		}
 		String token = ssoService.createToken(k.getEmail());
-		session.setAttribute("konto", k);
+		session.setAttribute(KONTO, k);
 		session.setAttribute("token", token);
 		return "redirect";
 	}
 	@RequestMapping(value = "/register.html", method = RequestMethod.POST)
 	public String register(
-			@ModelAttribute("konto") Konto konto,
+			@ModelAttribute(KONTO) Konto konto,
 			Model model) {
 
 		try {

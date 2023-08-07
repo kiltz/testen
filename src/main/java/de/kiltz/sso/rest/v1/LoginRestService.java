@@ -1,5 +1,6 @@
 package de.kiltz.sso.rest.v1;
 
+import de.kiltz.sso.service.SSOValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,7 +31,7 @@ public class LoginRestService {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<String> login(@RequestParam("email") String email, @RequestParam("passwort") String passwort){
+    public ResponseEntity<String> login(@RequestParam("email") String email, @RequestParam("passwort") String passwort) throws SSOValidationException {
         if (service.login(email, passwort) != null) {
             return new ResponseEntity<>(ssoService.createToken(email), HttpStatus.OK);
         }
