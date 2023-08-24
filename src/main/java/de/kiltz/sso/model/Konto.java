@@ -2,7 +2,7 @@ package de.kiltz.sso.model;
 
 import java.util.StringJoiner;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 /**
  * @author tz
