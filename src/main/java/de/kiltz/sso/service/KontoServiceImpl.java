@@ -2,6 +2,8 @@ package de.kiltz.sso.service;
 
 import java.util.List;
 
+import de.kiltz.sso.utils.TextUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,9 @@ import de.kiltz.sso.dao.KontoDao;
 import de.kiltz.sso.data.KontoEntity;
 import de.kiltz.sso.model.Konto;
 import de.kiltz.sso.model.converter.KontoConverter;
+import org.springframework.validation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author tz
@@ -17,10 +22,12 @@ import de.kiltz.sso.model.converter.KontoConverter;
 public class KontoServiceImpl implements KontoService{
     
     private final KontoDao dao;
+    private final Validator validator;
 
     @Autowired
-    public KontoServiceImpl(KontoDao dao) {
+    public KontoServiceImpl(KontoDao dao, Validator validator) {
         this.dao = dao;
+        this.validator = validator;
     }
 
     @Override
@@ -34,6 +41,15 @@ public class KontoServiceImpl implements KontoService{
     }
 
     private void validiere(Konto k)  throws SSOValidationException  {
+        Errors errors = new BeanPropertyBindingResult(k, k.getClass().getSimpleName());
+        validator.validate(k, errors);
+        if (errors.hasErrors()) {
+            throw new SSOValidationException("Validierung fehlgeschlagen: "+errors);
+        }
+        if (!TextUtils.pruefePasswort(k.getPasswort())) {
+            throw new SSOValidationException("Validierung fehlgeschlagen: " +
+                    "Passwort entspricht nicht den Regeln");
+        }
         StringBuilder fehler = new StringBuilder();
         if (k.getEmail() == null || k.getEmail().isEmpty()){
             fehler.append("Email ist ein Pflichtfeld");
@@ -63,7 +79,11 @@ public class KontoServiceImpl implements KontoService{
     }
 
     @Override
-    public Konto login(String email, String passwort) {
+    public Konto login(String email, String passwort) throws SSOValidationException {
+        if (Strings.isEmpty(email) || Strings.isEmpty(passwort)) {
+            throw new SSOValidationException("Validierung fehlgeschlagen: Email und Passwort dürfen nicht leer sein.");
+        }
+
         KontoEntity e = dao.findByEmailAndPasswort(email, passwort);
         return e == null ? null : KontoConverter.toModel(e);
     }

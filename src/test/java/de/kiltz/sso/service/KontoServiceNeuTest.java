@@ -1,27 +1,22 @@
 package de.kiltz.sso.service;
 
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import de.kiltz.sso.dao.KontoDao;
+import de.kiltz.sso.data.KontoEntity;
+import de.kiltz.sso.model.Konto;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.validation.Validator;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import de.kiltz.sso.dao.KontoDao;
-import de.kiltz.sso.data.KontoEntity;
-import de.kiltz.sso.model.Konto;
-
 /**
  * @author tz
  */
-@SpringBootTest
-public class KontoServiceNeuTest {
+class KontoServiceNeuTest {
 
     private KontoService service;
 
@@ -33,7 +28,13 @@ public class KontoServiceNeuTest {
             k.setId(1L);
             return k;
         });
-        service = new KontoServiceImpl(dao);
+
+        KontoEntity kontoEntity = new KontoEntity();
+        kontoEntity.setEmail("f@kiltz.de");
+        kontoEntity.setPasswort("keins");
+        when((dao.findByEmailAndPasswort("f@kiltz.de", "keins"))).thenReturn(kontoEntity);
+
+        service = new KontoServiceImpl(dao, mock(Validator.class));
     }
 
     @Test
@@ -64,7 +65,22 @@ public class KontoServiceNeuTest {
     void testNeuFehlendePflichtangabenAlternative() {
         Konto k = new Konto();
         assertThrows(SSOValidationException.class, () -> service.neu(k));
+    }
 
+    @Test
+    void testFehlerhaftesLoginOhnePasswort() {
+        assertThrows(SSOValidationException.class, () -> service.login("f@kiltz.de", ""));
+
+    }
+    @Test
+    void testKorrektesLogin() {
+        try {
+            Konto k = service.login("f@kiltz.de", "keins");
+            assertEquals("f@kiltz.de", k.getEmail());
+            assertEquals("keins", k.getPasswort());
+        } catch (SSOValidationException e) {
+            fail("Sollte keine Ex werfen");
+        }
 
     }
 }
