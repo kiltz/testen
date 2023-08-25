@@ -13,8 +13,6 @@ import de.kiltz.sso.model.Konto;
 import de.kiltz.sso.model.converter.KontoConverter;
 import org.springframework.validation.*;
 
-import javax.validation.Valid;
-
 /**
  * @author tz
  */
