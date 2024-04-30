@@ -53,7 +53,7 @@ public class KontoServiceImpl implements KontoService{
             fehler.append("Email ist ein Pflichtfeld");
         }
         // ...
-        if (fehler.length() > 0) {
+        if (!fehler.isEmpty()) {
             throw new SSOValidationException(fehler.toString());
         }
     }
