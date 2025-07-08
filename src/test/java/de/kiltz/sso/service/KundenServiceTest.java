@@ -63,7 +63,7 @@ class KundenServiceTest {
         k.setEmail("der@tester.de");
         k.setNachname("Testa");
         k.setVorname("Rossa");
-        k.setPasswort("nix");
+        k.setPasswort("garnix");
         return k;
     }
 }

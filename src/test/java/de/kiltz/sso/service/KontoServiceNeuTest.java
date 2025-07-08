@@ -41,6 +41,7 @@ class KontoServiceNeuTest {
     void testNeuGoodDay() {
         Konto k = new Konto();
         k.setEmail("f@kiltz.de");
+        k.setPasswort("Keins");
         assertNull(k.getId());
         try {
             Konto kNeu = service.neu(k);

@@ -1,0 +1,1 @@
+insert into KONTO (email, nachname, passwort, vorname) values ('f@kiltz.de', 'Kiltz', 'keins', 'Friedrich');
