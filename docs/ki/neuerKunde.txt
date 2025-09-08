@@ -1,0 +1,35 @@
+Gegeben:
+Der KundenService stellt eine Methode
+
+public Konto neu(Konto k) throws SSOValidationException {}
+
+Zur Verfügung. Die Klasse Konto schaut dabei so aus:
+
+public class Konto {
+
+    private Long id;
+    private String vorname;
+    private String nachname;
+    @NotEmpty
+    private String email;
+    @NotEmpty
+    private String passwort;
+// Getter und Setter
+}
+
+-------------
+
+Die fachlichen Vorgaben sind:
+
+Es darf kein Kunde abgespeichert werden, dessen EMail-Adresse schon gespeichert ist.
+
+Das Passwort darf nicht leer sein und muss mindestens 8 Zeichen enthalten, davon mindestens eine Zahl, ein Großbuchstabe und ein Sonderzeichen.
+
+Die Felder Nachname und Vorname dürfen nicht leer sein.
+
+Die Email-Adresse soll eine gültige Syntax haben.
+
+-------------
+
+Aufgabe:
+Erstelle einen JUnit 5 Test der die fachlichen Vorgaben überprüft.
