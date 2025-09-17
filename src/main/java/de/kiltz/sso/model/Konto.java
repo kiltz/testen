@@ -1,5 +1,6 @@
 package de.kiltz.sso.model;
 
+import java.io.Serializable;
 import java.util.StringJoiner;
 
 import jakarta.validation.constraints.NotEmpty;
@@ -7,7 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * @author tz
  */
-public class Konto {
+public class Konto implements Serializable {
 
     private Long id;
     private String vorname;
