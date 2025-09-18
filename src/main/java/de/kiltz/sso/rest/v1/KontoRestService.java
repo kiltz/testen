@@ -1,6 +1,5 @@
 package de.kiltz.sso.rest.v1;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,34 +21,38 @@ import de.kiltz.sso.service.SsoService;
  */
 
 @RestController
-@RequestMapping(path="rs/konto")
+@RequestMapping(path = "rs/konto")
 public class KontoRestService {
 
     private final KontoService service;
     private final SsoService ssoService;
 
-    @Autowired
     public KontoRestService(KontoService service, SsoService ssoService) {
         this.service = service;
         this.ssoService = ssoService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Konto> get(@RequestParam("email") String email, @RequestParam("token") String token ) {
+    public ResponseEntity<Konto> get(
+            @RequestParam("email") String email,
+            @RequestParam("token") String token) {
+
         if (!ssoService.validate(email, token)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return new ResponseEntity<>(service.holePerEmail(email), HttpStatus.OK);
+
+        Konto konto = service.holePerEmail(email);
+        return ResponseEntity.ok(konto);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> neu(@RequestBody Konto k) throws SSOValidationException {
-        Konto kNeu = service.neu(k);
-        return new ResponseEntity<>(kNeu.getId(), HttpStatus.CREATED);
+    public ResponseEntity<Long> neu(@RequestBody Konto konto) throws SSOValidationException {
+        Konto neuesKonto = service.neu(konto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(neuesKonto.getId());
     }
 
     @ExceptionHandler(SSOValidationException.class)
-    public ResponseEntity<String> exceptionHandler(Exception ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> handleSSOValidationException(SSOValidationException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
