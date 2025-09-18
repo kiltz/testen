@@ -52,8 +52,8 @@ class KontoCRUDTest {
         KontoEntity kontoUngespeichert = getDefaultKonto();
         dao.save(kontoUngespeichert);
 
-        assertNotNull(dao.findByEmail(DEFAULT_MAIL));
-        assertNull(dao.findByEmail(DEFAUL_WRONG));
+        assertNotNull(dao.findByEmailIgnoreCase(DEFAULT_MAIL));
+        assertNull(dao.findByEmailIgnoreCase(DEFAUL_WRONG));
     }
 
     @Test
@@ -61,10 +61,10 @@ class KontoCRUDTest {
         KontoEntity kontoUngespeichert = getDefaultKonto();
         dao.save(kontoUngespeichert);
 
-        assertNotNull(dao.findByEmailAndPasswort(DEFAULT_MAIL, "keins"));
-        assertNull(dao.findByEmailAndPasswort(DEFAULT_MAIL, "falsch"));
-        assertNull(dao.findByEmailAndPasswort(DEFAUL_WRONG, "keins"));
-        assertNull(dao.findByEmailAndPasswort(DEFAUL_WRONG, DEFAUL_WRONG));
+        assertNotNull(dao.findByEmailIgnoreCaseAndPasswort(DEFAULT_MAIL, "keins"));
+        assertNull(dao.findByEmailIgnoreCaseAndPasswort(DEFAULT_MAIL, "falsch"));
+        assertNull(dao.findByEmailIgnoreCaseAndPasswort(DEFAUL_WRONG, "keins"));
+        assertNull(dao.findByEmailIgnoreCaseAndPasswort(DEFAUL_WRONG, DEFAUL_WRONG));
     }
 
     @Test
@@ -79,11 +79,11 @@ class KontoCRUDTest {
     void testDelete() {
         KontoEntity kontoUngespeichert = getDefaultKonto();
         KontoEntity kontogespeichert = dao.save(kontoUngespeichert);
-        assertNotNull(dao.findByEmail(DEFAULT_MAIL));
+        assertNotNull(dao.findByEmailIgnoreCase(DEFAULT_MAIL));
 
         dao.delete(kontogespeichert);
 
-        assertNull(dao.findByEmail(DEFAULT_MAIL));
+        assertNull(dao.findByEmailIgnoreCase(DEFAULT_MAIL));
     }
     @Test
     void testInsert(){
@@ -111,7 +111,7 @@ class KontoCRUDTest {
         assertEquals(neuesPaswwort, kontoGeholtPerId.getPasswort());
 
         dao.delete(kontoGeholtPerId);
-        var erg = dao.findByEmail(e2.getEmail());
+        var erg = dao.findByEmailIgnoreCase(e2.getEmail());
         assertNull(erg);
 
     }
@@ -119,10 +119,10 @@ class KontoCRUDTest {
 
     @Test
     void testLogin() {
-        KontoEntity gefunden = dao.findByEmailAndPasswort(DEFAULT_MAIL2, "keins");
+        KontoEntity gefunden = dao.findByEmailIgnoreCaseAndPasswort(DEFAULT_MAIL2, "keins");
         assertEquals(DEFAULT_MAIL2, gefunden.getEmail());
 
-        KontoEntity nichtGefunden = dao.findByEmailAndPasswort(DEFAULT_MAIL2, "falsch");
+        KontoEntity nichtGefunden = dao.findByEmailIgnoreCaseAndPasswort(DEFAULT_MAIL2, "falsch");
         assertNull(nichtGefunden);
     }
 
@@ -149,7 +149,7 @@ class KontoCRUDTest {
 
     @Test
     void testHoleBeispielSatz() {
-        KontoEntity kGefunden = dao.findByEmail("test2@testa.de");
+        KontoEntity kGefunden = dao.findByEmailIgnoreCase("test2@testa.de");
         assertNotNull(kGefunden);
     }
 
