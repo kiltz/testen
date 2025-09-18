@@ -1,0 +1,26 @@
+Aufgabe #1
+===========
+
+Aufgabe:
+--------
+Es wurde festgestellt, dass die EMail-Adresse nicht konsequent genutzt wird.
+Leerzeichen und geänderte Groß- und Kleinschreibung führen bei der Registrierung,
+dem Login und dem holen des Kontos zu Fehlern.
+
+Tipp:
+-----
+1. Erzeuge einen neuen Branch von diesem Branch.
+
+    bugfix/1-<euerName>
+
+2. Baut und testet das Projekt, damit ihr auf einer guten Basis beginnen könnt.
+
+3. Schreibt einen oder mehrere Tests die den Fehler offen legen.
+
+4. Lokalisiert die Stellen an denen Handlungsbedarf besteht.
+
+5. Fixt die Fehler
+
+6. Testet und baut das Projekt.
+
+7. Wenn alles grün ist: Pushen und mir Bescheid sagen.
