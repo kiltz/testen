@@ -30,6 +30,7 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public Konto neu(Konto k) throws SSOValidationException {
+        k.setEmail(k.getEmail().toLowerCase().trim());
         validiere(k);
         if (dao.findByEmail(k.getEmail()) != null) {
             throw new SSOValidationException("Die E-Mail-Adresse ist schon vergeben!");
@@ -77,7 +78,8 @@ public class KontoServiceImpl implements KontoService{
     }
 
     @Override
-    public Konto login(String email, String passwort) throws SSOValidationException {
+    public Konto login(String emailUnformatted, String passwort) throws SSOValidationException {
+        String email = emailUnformatted.toLowerCase().trim();
         if (Strings.isEmpty(email) || Strings.isEmpty(passwort)) {
             throw new SSOValidationException("Validierung fehlgeschlagen: Email und Passwort dürfen nicht leer sein.");
         }
