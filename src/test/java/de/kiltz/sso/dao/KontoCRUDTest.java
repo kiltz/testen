@@ -31,6 +31,15 @@ class KontoCRUDTest {
         dao.deleteAll();
     }
 
+    private KontoEntity getDefaultKonto() {
+        KontoEntity e = new KontoEntity();
+        e.setNachname("Rossa");
+        e.setVorname("Testa");
+        e.setPasswort("keins");
+        e.setEmail(DEFAULT_EMAIL);
+        return e;
+    }
+
     //region CREATE
     @Test
     void testInsert(){
@@ -58,14 +67,6 @@ class KontoCRUDTest {
         assertNotNull(kontoByID);
     }
 
-    private KontoEntity getDefaultKonto() {
-        KontoEntity e = new KontoEntity();
-        e.setNachname("Rossa");
-        e.setVorname("Testa");
-        e.setPasswort("keins");
-        e.setEmail(DEFAULT_EMAIL);
-        return e;
-    }
 
     /**
      * Sucht nach der E-Mail aus dataCrud.sql
