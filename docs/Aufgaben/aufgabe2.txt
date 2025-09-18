@@ -1,0 +1,15 @@
+Aufgabe 2
+=========
+
+Aufgabe:
+--------
+Zweinmaliges Einloggen führt zu unterschiedlichen Token.
+Der Token darf sich bei einem Login nur ändern, wenn der benutzer sich vorher ausgelogged hat.
+
+Tipp:
+-----
+Vorgehendsweise analog zu Aufgabe 1.
+
+Branch:
+
+    bugfix/2-<euerName>

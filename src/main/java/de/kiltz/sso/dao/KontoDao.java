@@ -16,5 +16,5 @@ public interface KontoDao extends JpaRepository<KontoEntity, Long> {
     KontoEntity findByEmailAndPasswort(String email, String passwort);
     KontoEntity findByEmail(String email);
 
-    List<KontoEntity> findByNachnameContains(String suchbegriff);
+    List<KontoEntity> findByNachnameContainsIgnoreCase(String suchbegriff);
 }
