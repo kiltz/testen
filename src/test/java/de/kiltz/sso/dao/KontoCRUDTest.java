@@ -101,7 +101,7 @@ class KontoCRUDTest {
 
     private static KontoEntity getDefaultKonto() {
         KontoEntity e = new KontoEntity();
-        e.setEmail("test@testa.de");
+        e.setEmail("test3@testa.de");
         e.setNachname("Rossa");
         e.setVorname("Testa");
         e.setPasswort("keins");
