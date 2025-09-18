@@ -84,11 +84,10 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public Konto login(String emailUnformatted, String passwort) throws SSOValidationException {
-        String email = emailUnformatted.toLowerCase().trim();
-        if (Strings.isEmpty(email) || Strings.isEmpty(passwort)) {
+        if (Strings.isBlank(emailUnformatted) || Strings.isEmpty(passwort)) {
             throw new SSOValidationException("Validierung fehlgeschlagen: Email und Passwort dürfen nicht leer sein.");
         }
-
+        String email = emailUnformatted.toLowerCase().trim();
         KontoEntity e = dao.findByEmailAndPasswort(email, passwort);
         return e == null ? null : KontoConverter.toModel(e);
     }
