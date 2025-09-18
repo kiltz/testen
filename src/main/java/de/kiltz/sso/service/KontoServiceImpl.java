@@ -30,8 +30,13 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public Konto neu(Konto k) throws SSOValidationException {
+        if (k.getEmail() == null || k.getEmail().isBlank())
+        {
+            throw new SSOValidationException("Die E-Mail-Adresse ist nicht valide!");
+        }
         k.setEmail(k.getEmail().toLowerCase().trim());
         validiere(k);
+
         if (dao.findByEmail(k.getEmail()) != null) {
             throw new SSOValidationException("Die E-Mail-Adresse ist schon vergeben!");
         }

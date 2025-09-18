@@ -159,13 +159,6 @@ class KontoCRUDTest {
         KontoEntity kontogespeichert = dao.save(kontoUngespeichert);
 
         assertEquals(DEFAULT_MAIL, kontogespeichert.getEmail());
-    private static KontoEntity getDefaultKonto() {
-        KontoEntity e = new KontoEntity();
-        e.setEmail("test3@testa.de");
-        e.setNachname("Rossa");
-        e.setVorname("Testa");
-        e.setPasswort("keins");
-        return e;
     }
 
 }
