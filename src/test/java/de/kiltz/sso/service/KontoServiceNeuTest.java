@@ -41,7 +41,7 @@ class KontoServiceNeuTest {
     void testNeuGoodDay() {
         Konto k = new Konto();
         k.setEmail("f@kiltz.de");
-        k.setPasswort("Keins");
+        k.setPasswort("Keins1&nix");
         assertNull(k.getId());
         try {
             Konto kNeu = service.neu(k);
@@ -60,8 +60,15 @@ class KontoServiceNeuTest {
         } catch (SSOValidationException e) {
             // alles gut
         }
-
     }
+    @Test
+    void testNeuFehlendePflichtangabenInBesser() {
+        Konto k = new Konto();
+        assertThrows(SSOValidationException.class, () -> {
+            service.neu(k);
+        });
+    }
+
     @Test
     void testNeuFehlendePflichtangabenAlternative() {
         Konto k = new Konto();
