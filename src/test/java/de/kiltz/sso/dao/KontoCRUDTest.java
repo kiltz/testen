@@ -1,7 +1,6 @@
 package de.kiltz.sso.dao;
 
 import jakarta.transaction.Transactional;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,10 +10,6 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +24,7 @@ class KontoCRUDTest {
     private static final String DEFAULT_MAIL = "test@testa.de";
     private static final String DEFAUL_WRONG = "falsch";
 
-    private static final String DEFAULT_MAIL = "test2@testa.de";
+    private static final String DEFAULT_MAIL2 = "test2@testa.de";
     @Autowired
     private KontoDao dao;
 
@@ -81,7 +76,7 @@ class KontoCRUDTest {
     }
 
     @Test
-    void testDelete(){
+    void testDelete() {
         KontoEntity kontoUngespeichert = getDefaultKonto();
         KontoEntity kontogespeichert = dao.save(kontoUngespeichert);
         assertNotNull(dao.findByEmail(DEFAULT_MAIL));
@@ -89,6 +84,8 @@ class KontoCRUDTest {
         dao.delete(kontogespeichert);
 
         assertNull(dao.findByEmail(DEFAULT_MAIL));
+    }
+    @Test
     void testInsert(){
         KontoEntity e = getDefaultKonto();
         assertNull(e.getId());
@@ -119,21 +116,12 @@ class KontoCRUDTest {
 
     }
 
-
     @Test
     void testLogin() {
-        KontoEntity gefunden = dao.findByEmailAndPasswort(DEFAULT_MAIL, "keins");
-        assertEquals(DEFAULT_MAIL, gefunden.getEmail());
+        KontoEntity gefunden = dao.findByEmailAndPasswort(DEFAULT_MAIL2, "keins");
+        assertEquals(DEFAULT_MAIL2, gefunden.getEmail());
 
-        KontoEntity nichtGefunden = dao.findByEmailAndPasswort(DEFAULT_MAIL, "falsch");
-        assertNull(nichtGefunden);
-    }
-    @Test
-    void testFindByEmail() {
-        KontoEntity gefunden = dao.findByEmail(DEFAULT_MAIL);
-        assertEquals(DEFAULT_MAIL, gefunden.getEmail());
-
-        KontoEntity nichtGefunden = dao.findByEmail(DEFAULT_MAIL+"nichtDa");
+        KontoEntity nichtGefunden = dao.findByEmailAndPasswort(DEFAULT_MAIL2, "falsch");
         assertNull(nichtGefunden);
     }
 
@@ -162,15 +150,6 @@ class KontoCRUDTest {
     void testHoleBeispielSatz() {
         KontoEntity kGefunden = dao.findByEmail("test2@testa.de");
         assertNotNull(kGefunden);
-    }
-
-    private static KontoEntity getDefaultKonto() {
-        KontoEntity e = new KontoEntity();
-        e.setEmail("test@testa.de");
-        e.setNachname("Rossa");
-        e.setVorname("Testa");
-        e.setPasswort("keins");
-        return e;
     }
 
     @Test

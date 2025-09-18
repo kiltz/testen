@@ -1,5 +1,4 @@
 package de.kiltz.sso.utils;
-
 import java.util.regex.Pattern;
 
 public class TextUtils {
