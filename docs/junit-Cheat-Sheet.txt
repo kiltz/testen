@@ -1,0 +1,52 @@
+JUnit 5
+=======
+Lebenzyklus
+------------
+- @BeforeAll (static Methode VOR allen Tests)
+- @AfterAll (static Methode NACH allen Tests)
+- @BeforeEach (nicht-Static-Methode die VOR jedem einzelnen Test ausgeführt wird)
+- @AfterEach (nicht-Static-Methode die NACH jedem einzelnen Test ausgeführt wird)
+
+@Test -> die eigentliche Test-Methode, die keinen Parameter hat, void zurück gibt
+    Namensgebung: Entweder am Anfang oder am Ende "test", treffende Beschreibung was getestet wird.
+
+Assertions - Annahmen
+---------------------
+!!! Kein Test ohne Assertions !!!
+- Keine Ausgaben auf die Console (Sysout oder Logging)
+
+Paket: import static org.junit.jupiter.api.Assertions.*
+
+* assertFalse
+* assertTrue
+
+Parametrisierte Tests
+---------------------
+z.B.     private static List<String> getTestDaten() {
+             return List.of(
+                     "", // leer
+                     "1234567",  // ganz schlecht
+                     "keingrossbuchstabe",// ohne Zahl und ohne Sonderzeichen und ohne Großbuchstabe
+                     "ohneEineZahl",  // ohne Zahl und ohne Sonderzeichen
+                     "Ohne1SonderZeichen",     // nur ohne Sonderzeichen
+                     "mit1Und&",
+                     "mit1Und&"+"0".repeat(7)
+             );
+         }
+
+         @ParameterizedTest
+         @MethodSource("getTestDaten")
+         void testeFalschePasswoerter(String pw) {
+             assertFalse(TextUtils.pruefePasswort(pw));
+         }
+
+Weitere Sourcen möglich
+    @CsvFileSource
+    @CsvSource
+    @EnumSource
+    @ArgumentsSource
+
+SQL
+---
+Um einen Test-Datenbestand anzulegen, kann unter Ressources ein SQL-Script liegen, das vor dem Test ausgeführt wird.
+@Sql(scripts = "/dataCrud.sql")
