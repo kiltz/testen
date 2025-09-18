@@ -91,4 +91,5 @@ public class KontoServiceImpl implements KontoService{
         List<Konto> liste = KontoConverter.toModel(dao.findByNachnameContainsIgnoreCase(suchbegriff));
         return liste;
     }
+
 }

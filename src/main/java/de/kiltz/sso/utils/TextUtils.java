@@ -1,5 +1,7 @@
 package de.kiltz.sso.utils;
 
+
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TextUtils {
@@ -28,5 +30,20 @@ public class TextUtils {
             return false;
         }
 
-        return true;    }
+        return true;
+    }
+
+    public static boolean validateEmail(String email) {
+
+        email = email.trim().toLowerCase();
+
+        if (email == null || email.isEmpty()) {
+            return false;
+        }
+
+        Pattern emailRegex = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+        email = email.toLowerCase();
+        Matcher matcher = emailRegex.matcher(email);
+        return matcher.matches();
+    }
 }

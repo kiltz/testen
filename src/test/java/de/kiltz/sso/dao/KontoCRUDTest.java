@@ -79,7 +79,7 @@ class KontoCRUDTest {
 
     @Test
     void testFindByNachname() {
-        List<KontoEntity> lke = dao.findByNachnameContains("Rossa");
+        List<KontoEntity> lke = dao.findByNachnameContainsIgnoreCase("Rossa");
         KontoEntity ke = lke.getFirst();
         assertNotNull(ke);
     }
