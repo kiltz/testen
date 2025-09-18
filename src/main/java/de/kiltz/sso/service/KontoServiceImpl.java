@@ -88,7 +88,7 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public List<Konto> suche(String suchbegriff) {
-        List<Konto> liste = KontoConverter.toModel(dao.findByNachnameContains(suchbegriff));
+        List<Konto> liste = KontoConverter.toModel(dao.findByNachnameContainsIgnoreCase(suchbegriff));
         return liste;
     }
 }
