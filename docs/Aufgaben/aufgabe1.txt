@@ -21,6 +21,7 @@ Tipp:
 
 5. Fixt die Fehler
 
-6. Testet und baut das Projekt.
+6. Testet und baut das Projekt. =>
+    gradlew clean build
 
 7. Wenn alles grün ist: Pushen und mir Bescheid sagen.

@@ -32,7 +32,7 @@ class KontoServiceNeuTest {
         KontoEntity kontoEntity = new KontoEntity();
         kontoEntity.setEmail("f@kiltz.de");
         kontoEntity.setPasswort("keins");
-        when((dao.findByEmailAndPasswort("f@kiltz.de", "keins"))).thenReturn(kontoEntity);
+        when((dao.findByEmailIgnoreCaseAndPasswort("f@kiltz.de", "keins"))).thenReturn(kontoEntity);
 
         service = new KontoServiceImpl(dao, mock(Validator.class));
     }

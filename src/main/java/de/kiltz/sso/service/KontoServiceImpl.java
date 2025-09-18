@@ -4,25 +4,25 @@ import java.util.List;
 
 import de.kiltz.sso.utils.TextUtils;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.kiltz.sso.dao.KontoDao;
 import de.kiltz.sso.data.KontoEntity;
 import de.kiltz.sso.model.Konto;
 import de.kiltz.sso.model.converter.KontoConverter;
-import org.springframework.validation.*;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 /**
  * @author tz
  */
 @Service
 public class KontoServiceImpl implements KontoService{
-    
+
     private final KontoDao dao;
     private final Validator validator;
 
-    @Autowired
     public KontoServiceImpl(KontoDao dao, Validator validator) {
         this.dao = dao;
         this.validator = validator;
@@ -31,7 +31,7 @@ public class KontoServiceImpl implements KontoService{
     @Override
     public Konto neu(Konto k) throws SSOValidationException {
         validiere(k);
-        if (dao.findByEmail(k.getEmail()) != null) {
+        if (dao.findByEmailIgnoreCase(k.getEmail()) != null) {
             throw new SSOValidationException("Die E-Mail-Adresse ist schon vergeben!");
         }
         KontoEntity e = dao.save(KontoConverter.kontoEntity(k));
@@ -39,6 +39,7 @@ public class KontoServiceImpl implements KontoService{
     }
 
     private void validiere(Konto k)  throws SSOValidationException  {
+        k.setEmail(k.getEmail().trim());
         Errors errors = new BeanPropertyBindingResult(k, k.getClass().getSimpleName());
         validator.validate(k, errors);
         if (errors.hasErrors()) {
@@ -72,7 +73,7 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public Konto holePerEmail(String email) {
-        KontoEntity e = dao.findByEmail(email);
+        KontoEntity e = dao.findByEmailIgnoreCase(email);
         return e == null ? null : KontoConverter.toModel(e);
     }
 
@@ -82,7 +83,7 @@ public class KontoServiceImpl implements KontoService{
             throw new SSOValidationException("Validierung fehlgeschlagen: Email und Passwort dürfen nicht leer sein.");
         }
 
-        KontoEntity e = dao.findByEmailAndPasswort(email, passwort);
+        KontoEntity e = dao.findByEmailIgnoreCaseAndPasswort(email, passwort);
         return e == null ? null : KontoConverter.toModel(e);
     }
 
