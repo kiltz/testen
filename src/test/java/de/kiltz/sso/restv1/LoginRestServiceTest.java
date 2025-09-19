@@ -35,7 +35,7 @@ class LoginRestServiceTest {
     @Test
     void testTokenVerfallNachLogout() throws SSOValidationException {
 
-        var token1 = loginRestService.login(DEFAULT_MAIL, DEFAULT_PASSWORD).toString().split(",")[1];
+        var token1 = loginRestService.login(DEFAULT_MAIL, DEFAULT_PASSWORD).getBody();
 
         assertTrue(ssoService.validate(DEFAULT_MAIL, token1));
 
