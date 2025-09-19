@@ -1,6 +1,8 @@
-package de.kiltz.sso.service;
+package de.kiltz.sso.restv1;
 
 import de.kiltz.sso.rest.v1.LoginRestService;
+import de.kiltz.sso.service.SSOValidationException;
+import de.kiltz.sso.service.SsoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,15 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Sql(scripts = "/dataCrud.sql")
 @Transactional
-class LoginServiceTest {
+class LoginRestServiceTest {
 
     private static final String DEFAULT_MAIL = "test2@testa.de";
     private static final String DEFAULT_PASSWORD = "keins";
 
     @Autowired
     private SsoService ssoService;
-    @Autowired
-    private KontoService kontoService;
     @Autowired
     private LoginRestService loginRestService;
 
