@@ -45,13 +45,12 @@ public class KontoRestService {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> changePassword(@RequestParam("email") String email, @RequestParam("altesPasswort") String altesPasswort, @RequestParam("neuesPasswort") String neuesPasswort) throws SSOValidationException {
+        Konto konto;
 
-        if (service.login(email, altesPasswort) != null) {
+        if ((konto = service.login(email, altesPasswort)) != null ) {
             if (!TextUtils.pruefePasswort(neuesPasswort)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-
-            Konto konto = service.holePerEmail(email);
             konto.setPasswort(neuesPasswort);
             service.aktualisiere(konto);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

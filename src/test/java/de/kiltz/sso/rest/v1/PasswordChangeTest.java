@@ -23,9 +23,9 @@ class PasswordChangeTest {
     private static final String NEW_PASSWORD = "Deins&Se1ns!";
 
     @Autowired
-    KontoRestService kontoRestService;
+    private KontoRestService kontoRestService;
     @Autowired
-    KontoService kontoService;
+    private KontoService kontoService;
 
     @Test
     void testChangePasswordGoodDay() throws SSOValidationException {
