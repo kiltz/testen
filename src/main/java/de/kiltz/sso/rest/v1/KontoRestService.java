@@ -1,16 +1,11 @@
 package de.kiltz.sso.rest.v1;
 
+import jakarta.persistence.PreUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import de.kiltz.sso.model.Konto;
 import de.kiltz.sso.service.KontoService;
@@ -46,6 +41,12 @@ public class KontoRestService {
     public ResponseEntity<Long> neu(@RequestBody Konto k) throws SSOValidationException {
         Konto kNeu = service.neu(k);
         return new ResponseEntity<>(kNeu.getId(), HttpStatus.CREATED);
+    }
+
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "editpass")
+    public ResponseEntity<Konto> updatePass(@RequestParam("email") String email, @RequestParam("altesPasswort") String altesPasswort, @RequestParam("neuesPasswort") String neuesPasswort) {
+        Konto k = se
     }
 
     @ExceptionHandler(SSOValidationException.class)
