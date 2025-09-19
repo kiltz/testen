@@ -14,12 +14,6 @@ import org.springframework.stereotype.Service;
 public class SsoServiceImpl implements SsoService {
     private final Map<String, String> tokenMap = new HashMap<>();
 
-    @Override
-    public String createToken(String email) {
-        String token = UUID.randomUUID().toString();
-        tokenMap.put(email, token);
-        return token;
-    }
 
     @Override
     public boolean validate(String email, String token) {
@@ -33,12 +27,7 @@ public class SsoServiceImpl implements SsoService {
     }
 
     @Override
-    public String getToken(String email) {
-
-        if (tokenMap.get(email) != null) {
-            return tokenMap.get(email);
-        } else {
-            return createToken(email);
-        }
+    public String getOrCreateToken(String email) {
+        return tokenMap.computeIfAbsent(email, value -> UUID.randomUUID().toString());
     }
 }

@@ -30,6 +30,7 @@ public class KontoController {
 
 	@RequestMapping(value = "/logout.html", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
+        ssoService.delete((String) session.getAttribute("email"), (String) session.getAttribute("token"));
 		session.setAttribute(KONTO, null);
 		session.setAttribute("token", null);
 		return "redirect";
@@ -54,7 +55,7 @@ public class KontoController {
 			model.addAttribute("errMsg", "Login nicht erfolgreich");
 			return null;
 		}
-		String token = ssoService.getToken(k.getEmail());
+		String token = ssoService.getOrCreateToken(k.getEmail());
 		session.setAttribute(KONTO, k);
 		session.setAttribute("token", token);
 		return "redirect";
