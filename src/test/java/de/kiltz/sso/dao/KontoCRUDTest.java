@@ -73,7 +73,7 @@ class KontoCRUDTest {
      */
     @Test
     void testFindByEmail(){
-        KontoEntity ke = dao.findByEmail("test2@testa.de");
+        KontoEntity ke = dao.findByEmailIgnoreCase("test2@testa.de");
         assertNotNull(ke);
     }
 
@@ -86,7 +86,7 @@ class KontoCRUDTest {
 
     @Test
     void testFindByPasswortAndEmail() {
-        KontoEntity ke = dao.findByEmailAndPasswort(DEFAULT_EMAIL, "keins");
+        KontoEntity ke = dao.findByEmailIgnoreCaseAndPasswort(DEFAULT_EMAIL, "keins");
         assertNotNull(ke);
         assertEquals(DEFAULT_EMAIL, ke.getEmail());
         assertEquals("keins", ke.getPasswort());
@@ -108,7 +108,7 @@ class KontoCRUDTest {
         assertEquals("neuesPasswort", kontoGeholtPerID.getPasswort());
 
         dao.delete(kontoGeholtPerID);
-        var erg = dao.findByEmail(e2.getEmail());
+        var erg = dao.findByEmailIgnoreCase(e2.getEmail());
         assertNull(erg);
     }
     //endregion UPDATE&DELETE

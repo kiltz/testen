@@ -32,7 +32,7 @@ public class KontoServiceImpl implements KontoService{
     public Konto neu(Konto k) throws SSOValidationException {
         validiere(k);
 
-        if (dao.findByEmail(k.getEmail()) != null) {
+        if (dao.findByEmailIgnoreCase(k.getEmail()) != null) {
             throw new SSOValidationException("Die E-Mail-Adresse ist schon vergeben!");
         }
         KontoEntity e = dao.save(KontoConverter.kontoEntity(k));
@@ -78,7 +78,7 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public Konto holePerEmail(String email) {
-        KontoEntity e = dao.findByEmail(email);
+        KontoEntity e = dao.findByEmailIgnoreCase(email);
         return e == null ? null : KontoConverter.toModel(e);
     }
 
@@ -93,7 +93,7 @@ public class KontoServiceImpl implements KontoService{
             throw new SSOValidationException("Validierung fehlgeschlagen: Email und Passwort dürfen nicht leer sein.");
         }
 
-        KontoEntity e = dao.findByEmailAndPasswort(email, passwort);
+        KontoEntity e = dao.findByEmailIgnoreCaseAndPasswort(email, passwort);
         return e == null ? null : KontoConverter.toModel(e);
     }
 
