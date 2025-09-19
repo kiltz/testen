@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Transactional
 @SpringBootTest
 class KundenServiceTest {
 
@@ -47,8 +48,6 @@ class KundenServiceTest {
         } catch (SSOValidationException e) {
             fail("Sollte keine Ex werfen", e);
         }
-
-
     }
 
     private void pruefeGleichheitVon(Konto k, Konto eingelogged) {

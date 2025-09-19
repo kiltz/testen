@@ -16,6 +16,9 @@ public class SsoServiceImpl implements SsoService{
 
     @Override
     public String createToken(String email) {
+        if (tokenMap.containsKey(email)) {
+            return tokenMap.get(email);
+        }
         String token = UUID.randomUUID().toString();
         tokenMap.put(email, token);
         return token;

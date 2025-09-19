@@ -2,6 +2,7 @@ package de.kiltz.sso.service;
 
 import java.util.List;
 
+import de.kiltz.sso.utils.EmailUtils;
 import de.kiltz.sso.utils.TextUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import org.springframework.validation.*;
  */
 @Service
 public class KontoServiceImpl implements KontoService{
-    
+
     private final KontoDao dao;
     private final Validator validator;
 
@@ -31,12 +32,14 @@ public class KontoServiceImpl implements KontoService{
     @Override
     public Konto neu(Konto k) throws SSOValidationException {
         validiere(k);
+        k.setEmail(EmailUtils.normalisieren(k.getEmail()));
         if (dao.findByEmail(k.getEmail()) != null) {
             throw new SSOValidationException("Die E-Mail-Adresse ist schon vergeben!");
         }
         KontoEntity e = dao.save(KontoConverter.kontoEntity(k));
         return KontoConverter.toModel(e);
     }
+
 
     private void validiere(Konto k)  throws SSOValidationException  {
         Errors errors = new BeanPropertyBindingResult(k, k.getClass().getSimpleName());
@@ -72,9 +75,11 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public Konto holePerEmail(String email) {
-        KontoEntity e = dao.findByEmail(email);
+        String normEmail = EmailUtils.normalisieren(email);
+        KontoEntity e = dao.findByEmail(normEmail);
         return e == null ? null : KontoConverter.toModel(e);
     }
+
 
     @Override
     public Konto login(String email, String passwort) throws SSOValidationException {
@@ -82,13 +87,16 @@ public class KontoServiceImpl implements KontoService{
             throw new SSOValidationException("Validierung fehlgeschlagen: Email und Passwort dürfen nicht leer sein.");
         }
 
-        KontoEntity e = dao.findByEmailAndPasswort(email, passwort);
+        String normEmail = EmailUtils.normalisieren(email);
+        KontoEntity e = dao.findByEmailAndPasswort(normEmail, passwort);
         return e == null ? null : KontoConverter.toModel(e);
     }
+
 
     @Override
     public List<Konto> suche(String suchbegriff) {
         List<Konto> liste = KontoConverter.toModel(dao.findByNachnameContainsIgnoreCase(suchbegriff));
         return liste;
     }
+
 }
