@@ -44,7 +44,7 @@ public class KontoRestService {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> changePassword(@RequestParam("email") String email, @RequestParam("altesPasswort") String altesPasswort, @RequestParam("neuesPasswort") String neuesPasswort) throws SSOValidationException {
+    public ResponseEntity<Integer> changePassword(@RequestParam("email") String email, @RequestParam("altesPasswort") String altesPasswort, @RequestParam("neuesPasswort") String neuesPasswort) throws SSOValidationException {
         Konto konto;
 
         if ((konto = service.login(email, altesPasswort)) != null ) {
