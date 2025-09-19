@@ -15,4 +15,4 @@ RequestMethod: PUT
 consumes = MediaType.APPLICATION_JSON_VALUE
 Return-Status: 204 wenn ok
                403 Wenn altes Passwort falsch
-               400 Wenn neuse Passwort nicht den Passwort-Regeln entspricht
+               400 Wenn neues Passwort nicht den Passwort-Regeln entspricht

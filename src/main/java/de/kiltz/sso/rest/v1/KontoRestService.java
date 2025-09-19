@@ -1,16 +1,11 @@
 package de.kiltz.sso.rest.v1;
 
+import de.kiltz.sso.utils.TextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import de.kiltz.sso.model.Konto;
 import de.kiltz.sso.service.KontoService;
@@ -22,7 +17,7 @@ import de.kiltz.sso.service.SsoService;
  */
 
 @RestController
-@RequestMapping(path="rs/konto")
+@RequestMapping(path = "rs/konto")
 public class KontoRestService {
 
     private final KontoService service;
@@ -35,7 +30,7 @@ public class KontoRestService {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Konto> get(@RequestParam("email") String email, @RequestParam("token") String token ) {
+    public ResponseEntity<Konto> get(@RequestParam("email") String email, @RequestParam("token") String token) {
         if (!ssoService.validate(email, token)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -46,6 +41,24 @@ public class KontoRestService {
     public ResponseEntity<Long> neu(@RequestBody Konto k) throws SSOValidationException {
         Konto kNeu = service.neu(k);
         return new ResponseEntity<>(kNeu.getId(), HttpStatus.CREATED);
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> changePassword(@RequestParam("email") String email, @RequestParam("altesPasswort") String altesPasswort, @RequestParam("neuesPasswort") String neuesPasswort) throws SSOValidationException {
+
+        if (service.login(email, altesPasswort) != null) {
+            if (!TextUtils.pruefePasswort(neuesPasswort)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            Konto konto = service.holePerEmail(email);
+            konto.setPasswort(neuesPasswort);
+            service.aktualisiere(konto);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @ExceptionHandler(SSOValidationException.class)
