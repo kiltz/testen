@@ -19,6 +19,11 @@ Paket: import static org.junit.jupiter.api.Assertions.*
 
 * assertFalse
 * assertTrue
+* assertEquals
+* assertNull
+* assertNotNull
+
+* fail -> an diese Stelle im Quelltext darf er nicht kommen
 
 Parametrisierte Tests
 ---------------------
@@ -50,3 +55,18 @@ SQL
 ---
 Um einen Test-Datenbestand anzulegen, kann unter Ressources ein SQL-Script liegen, das vor dem Test ausgeführt wird.
 @Sql(scripts = "/dataCrud.sql")
+
+Mocking
+-------
+Basics:
+s. Klasse KontoServiceNeuTest
+
+Erzeugen eines Mocks:
+KontoDao dao = mock(KontoDao.class);
+
+Verhalten eines Mocks fest legen:
+        when((dao.findByEmailIgnoreCaseAndPasswort("f@kiltz.de", "keins"))).thenReturn(kontoEntity);
+Wenn die Methode 'dao.findByEmailIgnoreCaseAndPasswort' mit den Parametern "f@kiltz.de" und "keins" aufgerufen wird
+    dann gib das vorher erzeugte 'kontoEntity' zurück
+
+https://www.baeldung.com/mockito-series

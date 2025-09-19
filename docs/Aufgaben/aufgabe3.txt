@@ -1,0 +1,18 @@
+TDD: Passwort ändern
+====================
+
+Versuche per TDD eine REST-Funktionalität "Passwort ändern" zu realisieren.
+
+Tipp:
+-----
+Erstellt eine neue REST-Methode mit den Parametern
+
+@RequestParam("email")
+@RequestParam("altesPasswort")
+@RequestParam("neuesPasswort")
+
+RequestMethod: PUT
+consumes = MediaType.APPLICATION_JSON_VALUE
+Return-Status: 204 wenn ok
+               403 Wenn altes Passwort falsch
+               400 Wenn neuse Passwort nicht den Passwort-Regeln entspricht
