@@ -84,6 +84,11 @@ public class KontoServiceImpl implements KontoService{
 
     @Override
     public Konto login(String email, String passwort) throws SSOValidationException {
+
+        if (!TextUtils.validateEmail(email)) {
+            throw new SSOValidationException("Das ist keine E-Mail-Adresse");
+        }
+        email = email.trim().toLowerCase();
         if (Strings.isEmpty(email) || Strings.isEmpty(passwort)) {
             throw new SSOValidationException("Validierung fehlgeschlagen: Email und Passwort dürfen nicht leer sein.");
         }
@@ -97,4 +102,5 @@ public class KontoServiceImpl implements KontoService{
         List<Konto> liste = KontoConverter.toModel(dao.findByNachnameContainsIgnoreCase(suchbegriff));
         return liste;
     }
+
 }
