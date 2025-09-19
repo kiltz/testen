@@ -35,11 +35,11 @@ public class TextUtils {
 
     public static boolean validateEmail(String email) {
 
-        email = email.trim().toLowerCase();
-
         if (email == null || email.isEmpty()) {
             return false;
         }
+
+        email = email.trim().toLowerCase();
 
         Pattern emailRegex = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
         email = email.toLowerCase();

@@ -31,6 +31,7 @@ public class KontoServiceImpl implements KontoService{
     @Override
     public Konto neu(Konto k) throws SSOValidationException {
         validiere(k);
+
         if (dao.findByEmail(k.getEmail()) != null) {
             throw new SSOValidationException("Die E-Mail-Adresse ist schon vergeben!");
         }
@@ -44,6 +45,11 @@ public class KontoServiceImpl implements KontoService{
         if (errors.hasErrors()) {
             throw new SSOValidationException("Validierung fehlgeschlagen: "+errors);
         }
+
+        if (!TextUtils.validateEmail(k.getEmail())) {
+            throw new SSOValidationException("Das ist keine E-Mail-Adresse");
+        }
+        k.setEmail(k.getEmail().trim().toLowerCase());
         if (!TextUtils.pruefePasswort(k.getPasswort())) {
             throw new SSOValidationException("Validierung fehlgeschlagen: " +
                     "Passwort entspricht nicht den Regeln");
@@ -91,5 +97,4 @@ public class KontoServiceImpl implements KontoService{
         List<Konto> liste = KontoConverter.toModel(dao.findByNachnameContainsIgnoreCase(suchbegriff));
         return liste;
     }
-
 }
