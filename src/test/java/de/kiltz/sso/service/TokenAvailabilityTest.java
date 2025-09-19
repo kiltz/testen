@@ -1,7 +1,5 @@
 package de.kiltz.sso.service;
 
-import de.kiltz.sso.dao.KontoDao;
-import de.kiltz.sso.data.KontoEntity;
 import de.kiltz.sso.rest.v1.LoginRestService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +13,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Sql(scripts = "/dataCrud.sql")
+//insert into konto (vorname, nachname, email, passwort) values ('Testa', 'Rossa', 'test2@testa.de', 'keins');
 @Transactional
  class TokenAvailabilityTest {
+    public static final String MAIL = "test2@testa.de";
+    public static final String PASSWORT = "keins";
     @Autowired
     private LoginRestService service;
-    @Autowired
-    private KontoDao dao;
+
 
     @Test
     void testTokenAvailableLoginNoLogout(){
-
-        KontoEntity ktest = dao.findByEmailAndPasswort("test2@testa.de", "keins");
-        ResponseEntity<String> firstLoginToken = assertDoesNotThrow(()->service.login(ktest.getEmail(), ktest.getPasswort()));
+        ResponseEntity<String> firstLoginToken = assertDoesNotThrow(()->service.login(MAIL, PASSWORT));
         assertEquals(HttpStatus.OK, firstLoginToken.getStatusCode());
 
-        ResponseEntity<String> secondLoginToken = assertDoesNotThrow(()->service.login(ktest.getEmail(), ktest.getPasswort()));
+        ResponseEntity<String> secondLoginToken = assertDoesNotThrow(()->service.login(MAIL, PASSWORT));
         assertEquals(HttpStatus.OK, secondLoginToken.getStatusCode());
         assertEquals(firstLoginToken.getBody(),secondLoginToken.getBody());
     }
 
-    private static KontoEntity getDefaultKonto() {
-        KontoEntity e = new KontoEntity();
-        e.setEmail("test3@testa.de");
-        e.setNachname("Rossa");
-        e.setVorname("Testa");
-        e.setPasswort("keins");
-        return e;
-    }
+
 }
