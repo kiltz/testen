@@ -24,7 +24,6 @@ class EmailValidatorTest {
         return List.of(
                 "",
                 "@",
-                "weB&t@gmail.com",
                 "@hotmail.com",
                 "Dylan@.net",
                 "S.dorn@web."

@@ -41,7 +41,7 @@ public class TextUtils {
 
         email = email.trim().toLowerCase();
 
-        Pattern emailRegex = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+        Pattern emailRegex = Pattern.compile("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
         email = email.toLowerCase();
         Matcher matcher = emailRegex.matcher(email);
         return matcher.matches();
