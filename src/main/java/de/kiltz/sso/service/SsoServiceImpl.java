@@ -15,10 +15,13 @@ public class SsoServiceImpl implements SsoService{
     private final Map<String, String> tokenMap = new HashMap<>();
 
     @Override
-    public String createToken(String email) {
-        String token = UUID.randomUUID().toString();
-        tokenMap.put(email, token);
-        return token;
+    public String getOrCreateToken(String email) {
+//        if (!tokenMap.containsKey(email)) {
+//            tokenMap.put(email, UUID.randomUUID().toString());
+//        }
+//        return tokenMap.get(email);
+        // in neu und kurz:
+        return tokenMap.computeIfAbsent(email, key -> UUID.randomUUID().toString());
     }
 
     @Override

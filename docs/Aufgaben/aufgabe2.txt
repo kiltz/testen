@@ -3,7 +3,7 @@ Aufgabe 2
 
 Aufgabe:
 --------
-Zweinmaliges Einloggen führt zu unterschiedlichen Token.
+Zweimaliges Einloggen führt zu unterschiedlichen Token.
 Der Token darf sich bei einem Login nur ändern, wenn der Benutzer sich vorher ausgelogged hat.
 
 Tipp:

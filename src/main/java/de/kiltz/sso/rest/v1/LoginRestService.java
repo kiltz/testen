@@ -33,7 +33,7 @@ public class LoginRestService {
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> login(@RequestParam("email") String email, @RequestParam("passwort") String passwort) throws SSOValidationException {
         if (service.login(email, passwort) != null) {
-            return new ResponseEntity<>(ssoService.createToken(email), HttpStatus.OK);
+            return new ResponseEntity<>(ssoService.getOrCreateToken(email), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
