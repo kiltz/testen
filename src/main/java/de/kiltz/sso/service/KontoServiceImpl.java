@@ -39,7 +39,6 @@ public class KontoServiceImpl implements KontoService{
     }
 
     private void validiere(Konto k)  throws SSOValidationException  {
-        k.setEmail(k.getEmail().trim());
         Errors errors = new BeanPropertyBindingResult(k, k.getClass().getSimpleName());
         validator.validate(k, errors);
         if (errors.hasErrors()) {
@@ -52,6 +51,8 @@ public class KontoServiceImpl implements KontoService{
         StringBuilder fehler = new StringBuilder();
         if (k.getEmail() == null || k.getEmail().isEmpty()){
             fehler.append("Email ist ein Pflichtfeld");
+        } else {
+            k.setEmail(k.getEmail().trim());
         }
         // ...
         if (!fehler.isEmpty()) {
