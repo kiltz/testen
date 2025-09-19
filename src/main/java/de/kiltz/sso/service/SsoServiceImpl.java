@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @author tz
  */
 @Service
-public class SsoServiceImpl implements SsoService{
+public class SsoServiceImpl implements SsoService {
     private final Map<String, String> tokenMap = new HashMap<>();
 
     @Override
@@ -30,5 +30,15 @@ public class SsoServiceImpl implements SsoService{
     @Override
     public void delete(String email, String token) {
         tokenMap.remove(email);
+    }
+
+    @Override
+    public String getToken(String email) {
+
+        if (tokenMap.get(email) != null) {
+            return tokenMap.get(email);
+        } else {
+            return createToken(email);
+        }
     }
 }

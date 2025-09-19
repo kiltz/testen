@@ -54,7 +54,7 @@ public class KontoController {
 			model.addAttribute("errMsg", "Login nicht erfolgreich");
 			return null;
 		}
-		String token = ssoService.createToken(k.getEmail());
+		String token = ssoService.getToken(k.getEmail());
 		session.setAttribute(KONTO, k);
 		session.setAttribute("token", token);
 		return "redirect";
