@@ -1,0 +1,1 @@
+delete konto where email = 'test2@testa.de';
